@@ -2,7 +2,12 @@
 
 ## 📌 Project Overview
 
-This is a full-stack Airbnb clone project using Node.js, Express, MongoDB, and EJS.
+This is a full-stack Airbnb clone project using **Node.js, Express, MongoDB, and EJS**.
+
+Currently, the project supports **basic listing display functionality** including:
+
+* Viewing all listings
+* Viewing individual listing details
 
 ---
 
@@ -20,6 +25,11 @@ This is a full-stack Airbnb clone project using Node.js, Express, MongoDB, and E
 AIRBNBCLONE/
 ├── init/
 ├── models/
+│    └── listing.js
+├── views/
+│    └── listings/
+│         ├── index.ejs
+│         └── show.ejs
 ├── app.js
 ├── package.json
 ```
@@ -46,7 +56,7 @@ node init/index.js
 
 # 📅 Development Log (Progress Tracker)
 
-## 🔹 18 March 2026 [STARTED]
+## 🔹 18 March 2026
 
 * Initialized project
 * Connected MongoDB using Mongoose
@@ -61,12 +71,30 @@ node init/index.js
 
 ## 🔹 19 March 2026
 
-* (Add what you do here)
-* Example:
+* Created **Index Route** (`/listings`)
 
-  * Created index route
-  * Learned Express routing
-  * Understood path params vs query
+  * Fetched all listings using `Listing.find()`
+  * Rendered data using EJS
+
+* Built **index.ejs**
+
+  * Displayed listings dynamically using loop
+
+* Created **Show Route** (`/listings/:id`)
+
+  * Used `req.params` to extract ID
+  * Used `findById()` to fetch single listing
+
+* Built **show.ejs**
+
+  * Displayed detailed listing info
+
+* Learned:
+
+  * Difference between `req.params`, `req.body`
+  * Importance of `await` in async DB calls
+  * How `res.render()` works with views
+  * Folder structure importance (`views/listings`)
 
 ---
 
@@ -80,24 +108,29 @@ node init/index.js
 
 ✅ Database connected
 ✅ Data seeding working
+✅ Index Route working
+✅ Show Route working
 🔄 CRUD routes (in progress)
 
 ---
 
 # 🎯 Next Goals
 
-* [ ] Build Index Route (`/listings`)
-* [ ] Show Route (`/listings/:id`)
-* [ ] Create Route
-* [ ] Add EJS templates
+* [ ] Create Route (Add new listing)
+* [ ] Edit & Update Route
+* [ ] Delete Route
+* [ ] Add form handling (`req.body`)
+* [ ] Improve UI styling
 
 ---
 
-# 🧠 Learnings
+# 🧠 Key Learnings
 
-* Always match schema with data
-* Debug using console logs
-* Never push `node_modules`
+* Always match **render path with folder structure**
+* MongoDB operations are **async → always use `await`**
+* `req.params` is used for **dynamic route values**
+* `express.urlencoded()` is required for form data
+* EJS helps render dynamic data on UI
 
 ---
 
