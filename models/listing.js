@@ -9,8 +9,8 @@ const listingSchema=new Schema({
     description:String,
     image:{
         type:String,
-        default:"https://images.unsplash.com/photo-xxxxx",
-        set:(str)=>v===""?"https://images.unsplash.com/photo-xxxxx":str,
+        default:"./init/pexels-pixabay-271618",
+        set:(str)=>str===""?"pexels-pixabay-271618":str,
     },
     price:Number,
     location:String,

@@ -1,27 +1,29 @@
-# 🏡 Airbnb Clone (Full Stack Project)
+🏡 Airbnb Clone (Full Stack Project)
+📌 Project Overview
 
-## 📌 Project Overview
+This is a full-stack Airbnb clone project using Node.js, Express, MongoDB, and EJS.
 
-This is a full-stack Airbnb clone project using **Node.js, Express, MongoDB, and EJS**.
+Currently, the project supports full CRUD functionality including:
 
-Currently, the project supports **basic listing display functionality** including:
+Viewing all listings
 
-* Viewing all listings
-* Viewing individual listing details
+Viewing individual listing details
 
----
+Creating new listings
 
-## 🛠️ Tech Stack
+Editing existing listings
 
-* Frontend: HTML, CSS, JS, EJS
-* Backend: Node.js, Express.js
-* Database: MongoDB, Mongoose
+Deleting listings
 
----
+🛠️ Tech Stack
 
-## 📁 Project Structure
+Frontend: HTML, CSS, JS, EJS
 
-```
+Backend: Node.js, Express.js
+
+Database: MongoDB, Mongoose
+
+📁 Project Structure
 AIRBNBCLONE/
 ├── init/
 ├── models/
@@ -29,111 +31,96 @@ AIRBNBCLONE/
 ├── views/
 │    └── listings/
 │         ├── index.ejs
-│         └── show.ejs
+│         ├── show.ejs
+│         ├── new.ejs
+│         └── edit.ejs
 ├── app.js
 ├── package.json
-```
-
----
-
-## ⚙️ Setup Instructions
-
-```bash
+⚙️ Setup Instructions
 npm install
 mongod
 node app.js
-```
-
----
-
-## 🌱 Database Seeding
-
-```bash
+🌱 Database Seeding
 node init/index.js
-```
+📅 Development Log (Progress Tracker)
+🔹 18 March 2026
 
----
+Initialized project
 
-# 📅 Development Log (Progress Tracker)
+Connected MongoDB using Mongoose
 
-## 🔹 18 March 2026
+Created Listing schema
 
-* Initialized project
-* Connected MongoDB using Mongoose
-* Created Listing schema
-* Learned about `module.exports`
-* Fixed schema vs data mismatch bug (image object vs string)
-* Successfully seeded database using `insertMany()`
-* Setup `.gitignore`
-* Prepared project for GitHub
+Learned about module.exports
 
----
+Fixed schema vs data mismatch bug (image object vs string)
 
-## 🔹 19 March 2026
+Successfully seeded database using insertMany()
 
-* Created **Index Route** (`/listings`)
+Setup .gitignore
 
-  * Fetched all listings using `Listing.find()`
-  * Rendered data using EJS
+Prepared project for GitHub
 
-* Built **index.ejs**
+🔹 19 March 2026
 
-  * Displayed listings dynamically using loop
+Implemented Index & Show Routes using find() and findById()
 
-* Created **Show Route** (`/listings/:id`)
+Built index.ejs & show.ejs for dynamic rendering
 
-  * Used `req.params` to extract ID
-  * Used `findById()` to fetch single listing
+Implemented Create Route (POST /listings)
 
-* Built **show.ejs**
+Built new.ejs for adding listings
 
-  * Displayed detailed listing info
+Implemented Edit & Update Routes (PUT /listings/:id)
 
-* Learned:
+Built edit.ejs with pre-filled data
 
-  * Difference between `req.params`, `req.body`
-  * Importance of `await` in async DB calls
-  * How `res.render()` works with views
-  * Folder structure importance (`views/listings`)
+Implemented Delete Route (DELETE /listings/:id)
 
----
+Applied RESTful routing principles
 
-## 🔹 20 March 2026
+Used method-override for PUT & DELETE
 
-* (Your updates)
+Worked with MongoDB CRUD using Mongoose
 
----
+🔹 20 March 2026
 
-# 🚀 Current Status
+(Your updates)
+
+🚀 Current Status
 
 ✅ Database connected
 ✅ Data seeding working
 ✅ Index Route working
 ✅ Show Route working
-🔄 CRUD routes (in progress)
+✅ CRUD routes implemented
 
----
+🎯 Next Goals
 
-# 🎯 Next Goals
+ Improve UI styling
 
-* [ ] Create Route (Add new listing)
-* [ ] Edit & Update Route
-* [ ] Delete Route
-* [ ] Add form handling (`req.body`)
-* [ ] Improve UI styling
+ Add validations
 
----
+ Add authentication
 
-# 🧠 Key Learnings
+ Deploy project
 
-* Always match **render path with folder structure**
-* MongoDB operations are **async → always use `await`**
-* `req.params` is used for **dynamic route values**
-* `express.urlencoded()` is required for form data
-* EJS helps render dynamic data on UI
+🧠 Key Learnings
 
----
+Always match render path with folder structure
 
-## 👨‍💻 Author
+MongoDB operations are async → always use await
+
+req.params and req.body usage
+
+express.urlencoded() is required for form data
+
+RESTful routing (GET, POST, PUT, DELETE)
+
+Method override for PUT & DELETE
+
+EJS for dynamic rendering
+
+👨‍💻 Author
 
 Tushar Panwar
