@@ -1,31 +1,71 @@
 🏡 Airbnb Clone (Full Stack Project)
 📌 Project Overview
 
-This is a full-stack Airbnb clone project using Node.js, Express, MongoDB, and EJS.
+This is a full-stack Airbnb clone built using Node.js, Express, MongoDB, and EJS.
 
-Currently, the project supports full CRUD functionality including:
+The application currently supports complete CRUD operations along with responsive UI using Bootstrap:
 
-Viewing all listings
+View all listings
 
-Viewing individual listing details
+View individual listing details
 
-Creating new listings
+Create new listings
 
-Editing existing listings
+Edit existing listings
 
-Deleting listings
+Delete listings
 
 🛠️ Tech Stack
 
-Frontend: HTML, CSS, JS, EJS
+Frontend:
 
-Backend: Node.js, Express.js
+HTML
 
-Database: MongoDB, Mongoose
+CSS
+
+JavaScript
+
+EJS
+
+Bootstrap 5
+
+Backend:
+
+Node.js
+
+Express.js
+
+Database:
+
+MongoDB
+
+Mongoose
+
+📸 Features Preview
+🏠 All Listings Page
+
+Card-based responsive UI
+
+Clean grid layout using Bootstrap
+
+➕ Create Listing Page
+
+Structured form with proper spacing
+
+User-friendly input fields
+
+📄 Listing Detail Page
+
+Image preview
+
+Edit & Delete actions
+
+Clean layout with footer
 
 📁 Project Structure
 AIRBNBCLONE/
 ├── init/
+│    └── index.js
 ├── models/
 │    └── listing.js
 ├── views/
@@ -34,6 +74,8 @@ AIRBNBCLONE/
 │         ├── show.ejs
 │         ├── new.ejs
 │         └── edit.ejs
+├── public/
+│    └── css/
 ├── app.js
 ├── package.json
 ⚙️ Setup Instructions
@@ -53,73 +95,80 @@ Created Listing schema
 
 Learned about module.exports
 
-Fixed schema vs data mismatch bug (image object vs string)
+Fixed schema mismatch bug
 
-Successfully seeded database using insertMany()
+Seeded database using insertMany()
 
 Setup .gitignore
 
-Prepared project for GitHub
-
 🔹 19 March 2026
 
-Implemented Index & Show Routes using find() and findById()
+Implemented full CRUD operations
 
-Built index.ejs & show.ejs for dynamic rendering
+Built all EJS templates (index, show, new, edit)
 
-Implemented Create Route (POST /listings)
+Applied RESTful routing
 
-Built new.ejs for adding listings
+Used method-override
 
-Implemented Edit & Update Routes (PUT /listings/:id)
+Practiced MongoDB operations
 
-Built edit.ejs with pre-filled data
+🔹 20 March 2026 🚀 (Major UI Update)
 
-Implemented Delete Route (DELETE /listings/:id)
+Styled all EJS pages
 
-Applied RESTful routing principles
+Integrated Bootstrap 5 for UI components
 
-Used method-override for PUT & DELETE
+Built responsive card layout for listings
 
-Worked with MongoDB CRUD using Mongoose
+Designed clean form UI for creating/editing listings
 
-🔹 20 March 2026
+Improved listing detail page layout
 
-(Your updates)
+Fixed static file serving issues
+
+Fixed image rendering issues
+
+Created reusable navbar & footer components
 
 🚀 Current Status
 
 ✅ Database connected
 ✅ Data seeding working
-✅ Index Route working
-✅ Show Route working
-✅ CRUD routes implemented
+✅ Full CRUD functionality implemented
+✅ UI fully styled using Bootstrap
+✅ Responsive design implemented
+✅ Static files working properly
 
 🎯 Next Goals
 
- Improve UI styling
+Add form validations (client + server)
 
- Add validations
+Implement authentication (Login/Signup)
 
- Add authentication
+Add authorization (only owner can edit/delete)
 
- Deploy project
+Image upload (Cloudinary / Multer)
+
+Add flash messages (success/error)
+
+Deploy project (Render / Railway)
 
 🧠 Key Learnings
 
-Always match render path with folder structure
+Serving static files using express.static()
 
-MongoDB operations are async → always use await
+Bootstrap integration with EJS templates
 
-req.params and req.body usage
+Component-based UI (navbar, footer)
 
-express.urlencoded() is required for form data
+RESTful routing in Express
 
-RESTful routing (GET, POST, PUT, DELETE)
+Handling form data with req.body
 
-Method override for PUT & DELETE
+MongoDB CRUD with Mongoose
 
-EJS for dynamic rendering
+Debugging real-world issues (CSS not loading, image paths)
 
 👨‍💻 Author
 
