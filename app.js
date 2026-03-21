@@ -32,9 +32,9 @@ app.get("/", (req, res) => {
 });
 
 const validateListing=(req,res,next)=>{
-  let {err}=listingSchema.validate(req.body);
-  if(err){
-    throw new expressError(400,res.err)
+  let {error}=listingSchema.validate(req.body);
+  if(error){
+    throw new expressError(400,error.message)
   }
   else{
     next();
@@ -60,11 +60,11 @@ app.get("/listings/:id", wrapAsync(async (req, res) => {
 }));
 
 // CREATE ROUTE
-app.post("/listings",validateListing(wrapAsync(async (req, res, next) => {
+app.post("/listings",validateListing,wrapAsync(async (req, res, next) => {
   const newListing = new Listing(req.body.listing);
   await newListing.save();
   res.redirect("/listings");
-})));
+}));
 
 // EDIT ROUTE
 app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
@@ -74,11 +74,11 @@ app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
 }));
 
 // UPDATE ROUTE
-app.put("/listings/:id", validateListing(wrapAsync(async (req, res) => {
+app.put("/listings/:id", validateListingwrapAsync(async (req, res) => {
   let { id } = req.params;
   await Listing.findByIdAndUpdate(id, { ...req.body.listing });
   res.redirect(`/listings/${id}`);
-})));
+}));
 
 // DELETE ROUTE
 app.delete("/listings/:id", wrapAsync(async (req, res) => {
