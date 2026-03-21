@@ -12,7 +12,10 @@ const listingSchema=new Schema({
         default:"/images/jpg.jpg",
         set:(str)=>str===""?"/images/jpg.jpg":str,
     },
-    price:Number,
+    price:{
+        type:Number,
+        required:true,
+    },
     location:String,
     country:String
 });
