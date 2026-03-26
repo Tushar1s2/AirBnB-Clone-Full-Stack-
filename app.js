@@ -6,9 +6,9 @@ const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const wrapAsync= require("./utils/wrapAsync.js");
-const expressError=require("./utils/expressError.js");
-const {listingSchema}=require("./schema.js");
+const wrapAsync = require("./utils/wrapAsync.js");
+const expressError = require("./utils/expressError.js");
+const listingSchema = require("./schema.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -31,15 +31,15 @@ app.get("/", (req, res) => {
   res.send("I am root path");
 });
 
-const validateListing=(req,res,next)=>{
-  let {error}=listingSchema.validate(req.body);
-  if(error){
-    throw new expressError(400,error.message)
-  }
-  else{
+const validateListing = (req, res, next) => {
+  let { error } = listingSchema.validate(req.body);
+  if (error) {
+    console.log("VALIDATION ERROR:", error.message); // 👈 ADD THIS
+    throw new expressError(400, error.message);
+  } else {
     next();
   }
-}
+};
 
 // INDEX ROUTE
 app.get("/listings", wrapAsync(async (req, res) => {
@@ -60,9 +60,14 @@ app.get("/listings/:id", wrapAsync(async (req, res) => {
 }));
 
 // CREATE ROUTE
-app.post("/listings",validateListing,wrapAsync(async (req, res, next) => {
+app.post("/listings", validateListing, wrapAsync(async (req, res) => {
+  // 🔥 convert price to number
+  req.body.listing.price = Number(req.body.listing.price);
   const newListing = new Listing(req.body.listing);
-  await newListing.save();
+  console.log("FULL BODY:", req.body);
+  console.log("LISTING:", req.body.listing);
+  const saved = await newListing.save();
+  console.log("SAVED:", saved);
   res.redirect("/listings");
 }));
 
@@ -74,9 +79,10 @@ app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
 }));
 
 // UPDATE ROUTE
-app.put("/listings/:id", validateListingwrapAsync(async (req, res) => {
+app.put("/listings/:id", validateListing, wrapAsync(async (req, res) => {
   let { id } = req.params;
-  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+  req.body.listing.price = Number(req.body.listing.price); // ✅ FIX
+  await Listing.findByIdAndUpdate(id, req.body.listing);
   res.redirect(`/listings/${id}`);
 }));
 
@@ -87,17 +93,25 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
   res.redirect("/listings");
 }));
 
+//review
+app.post("/listings/:id/reviews", async (req, res) => {
+  let listing = await Listing.findById(req.params.id);
+  let newReview = new Review(req.body.review);
+  listing.reviews.push(newReview);
+  await newReview.save();
+  await listing.save();
+  console.log("New review saved!");
+  res.send("Review saved");
+});
 
 // NO ROUTE FIND ERROR HANDLING
 app.use((req, res, next) => {
-  // next(new expressError(404, "Page not found"));
   res.render("listings/error.ejs");
 });
 // ERROR HANDLING MIDDLEWARE FOR ALL ERROR
 app.use((err, req, res, next) => {
-  let { status = 500, message = "Something went wrong" }=err;
-  res.render("listings/error.ejs",{message});
-  
+  let { status = 500, message = "Something went wrong" } = err;
+  res.render("listings/error.ejs", { message });
 });
 
 app.listen(8080, () => {
