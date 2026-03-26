@@ -8,7 +8,8 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const expressError = require("./utils/expressError.js");
-const listingSchema = require("./schema.js");
+const Review= require("./models/review.js");
+const { listingSchema, reviewSchema } = require("./schema.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -33,6 +34,16 @@ app.get("/", (req, res) => {
 
 const validateListing = (req, res, next) => {
   let { error } = listingSchema.validate(req.body);
+  if (error) {
+    console.log("VALIDATION ERROR:", error.message); // 👈 ADD THIS
+    throw new expressError(400, error.message);
+  } else {
+    next();
+  }
+};
+
+const validateReview = (req, res, next) => {
+  let { error } = reviewSchema.validate(req.body);
   if (error) {
     console.log("VALIDATION ERROR:", error.message); // 👈 ADD THIS
     throw new expressError(400, error.message);
@@ -94,19 +105,19 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
 }));
 
 //review
-app.post("/listings/:id/reviews", async (req, res) => {
+app.post("/listings/:id/reviews",validateReview,wrapAsync(async (req, res) => {
   let listing = await Listing.findById(req.params.id);
-  let newReview = new Review(req.body.review);
+  let newReview =new Review(req.body.review);
   listing.reviews.push(newReview);
   await newReview.save();
   await listing.save();
   console.log("New review saved!");
   res.send("Review saved");
-});
+}));
 
 // NO ROUTE FIND ERROR HANDLING
-app.use((req, res, next) => {
-  res.render("listings/error.ejs");
+app.use((err,req, res, next) => {
+  res.render("listings/error.ejs",{err});
 });
 // ERROR HANDLING MIDDLEWARE FOR ALL ERROR
 app.use((err, req, res, next) => {
