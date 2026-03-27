@@ -66,8 +66,8 @@ app.get("/listings/new", (req, res) => {
 // Show route
 app.get("/listings/:id", wrapAsync(async (req, res) => {
   let { id } = req.params;
-  const listing = await Listing.findById(id);
-  res.render("listings/show.ejs", { listing });
+  const listing = await Listing.findById(id).populate("reviews");
+  res.render("listings/show.ejs", { listing});
 }));
 
 // CREATE ROUTE
@@ -106,13 +106,21 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
 
 //REVIEW ROUTE
 app.post("/listings/:id/reviews",validateReview,wrapAsync(async (req, res) => {
+  let{id}=req.params;
   let listing = await Listing.findById(req.params.id);
   let newReview =new Review(req.body.review);
   listing.reviews.push(newReview);
   await newReview.save();
   await listing.save();
-  console.log("New review saved!");
-  res.send("Review saved");
+  res.redirect(`/listings/${id}`)
+}));
+
+// DELETE REVIEW 
+app.delete("/listings/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
+  let {id,reviewId}=req.params;
+  await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
+  await Review.findByIdAndDelete(reviewId);
+  res.redirect(`/listings/${id}`);
 }));
 
 // NO ROUTE FIND ERROR HANDLING
