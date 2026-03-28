@@ -5,7 +5,7 @@
 A full-stack Airbnb clone built using Node.js, Express, MongoDB, and EJS.
 This project demonstrates strong backend fundamentals, RESTful architecture, data validation, and dynamic server-side rendering.
 
-The application now includes CRUD functionality, review system integration, validation middleware, flash messaging, and a responsive UI.
+The application includes CRUD functionality, review system integration, validation middleware, flash messaging, and a responsive UI.
 
 ---
 
@@ -71,7 +71,6 @@ The application now includes CRUD functionality, review system integration, vali
 
 ## 📁 Project Structure
 
-```
 AIRBNBCLONE/
 ├── init/                # Database seeding
 ├── models/              # Mongoose schemas
@@ -87,23 +86,20 @@ AIRBNBCLONE/
 ├── schema.js            # Joi validation schemas
 ├── app.js               # Main server file
 └── package.json
-```
 
 ---
 
 ## ⚙️ Setup Instructions
 
-```bash
 npm install
 mongod
 node app.js
-```
 
-### 🌱 Seed Initial Data
+---
 
-```bash
+## 🌱 Seed Initial Data
+
 node init/index.js
-```
 
 ---
 
@@ -139,12 +135,12 @@ node init/index.js
 
 #### 🔥 Major Fixes:
 
-* Fixed route priority issues (`/:id` vs `/new`, `/edit`)
+* Fixed route priority issues (/:id vs /new, /edit)
 * Resolved import/export mismatch (Joi schemas)
-* Corrected `_id` usage in EJS
+* Corrected _id usage in EJS
 * Fixed data type mismatch (string → number)
 * Debugged silent validation failures
-* Clarified MongoDB shell behavior (cursor, `.pretty()`)
+* Clarified MongoDB shell behavior (cursor, .pretty())
 
 #### 🧠 Key Debugging Learnings:
 
@@ -152,8 +148,38 @@ node init/index.js
 * Express routes follow top-to-bottom priority
 * Form data is always received as strings
 * Import/export mismatches can silently break logic
-* Always debug using `console.log(req.body)`
+* Always debug using console.log(req.body)
 * Error middleware can mask root issues
+
+---
+
+### 🔹 27 March 2026 🧩 (Routing & Reviews Integration)
+
+* Implemented nested review routes (/listings/:id/reviews)
+* Understood and fixed route parameter flow issues
+* Learned importance of mergeParams: true in Express Router
+* Fixed incorrect route structuring causing undefined params
+* Debugged review creation flow (form → route → DB)
+
+---
+
+### 🔹 28 March 2026 🚀 (Critical Debugging & Stability)
+
+#### 🔥 Major Fixes:
+
+* Fixed Cannot read properties of null (reading 'reviews') error
+* Identified root cause: missing params in nested routes
+* Implemented proper router mounting strategy
+* Strengthened validation middleware logic
+* Added defensive checks for database queries
+
+#### 🧠 Key Learnings:
+
+* Nested routes require mergeParams: true
+* Always validate existence of DB documents before accessing fields
+* Route design directly impacts data flow
+* Debugging should focus on data flow, not just error messages
+* Understanding Express router layering is critical
 
 ---
 
@@ -193,4 +219,4 @@ node init/index.js
 
 ## 👨‍💻 Author
 
-**Tushar Panwar**
+Tushar Panwar
