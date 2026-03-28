@@ -1,7 +1,8 @@
 const express=require("express");
+const router = express.Router({ mergeParams: true });
 const wrapAsync = require("../utils/wrapAsync.js");
 const expressError = require("../utils/expressError.js");
-const { listingSchema, reviewSchema } = require("../schema.js");
+const { listingSchema} = require("../schema.js");
 const Listing = require("../models/listing.js");
 
 const validateListing = (req, res, next) => {
@@ -14,7 +15,7 @@ const validateListing = (req, res, next) => {
   }
 };
 
-const router=express.Router();
+
 
 // INDEX ROUTE
 router.get("/", wrapAsync(async (req, res) => {
