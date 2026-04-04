@@ -13,6 +13,7 @@ const User=require("./models/user.js");
 const listingsRoute=require("./routes/listing.js");
 const reviewRoute=require("./routes/review.js");
 const session=require("express-session");
+const userRoute=require("./routes/user.js");
 const { deserialize } = require("v8");
 const sessionOptions={
   secret:"mysupersecret",
@@ -24,6 +25,7 @@ const sessionOptions={
     httpOnly:true,
   }
 };
+
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -74,7 +76,7 @@ app.get("/demouser",async(req,res) => {
 // Routes
 app.use("/listings",listingsRoute);
 app.use("/listings/:id/reviews",reviewRoute);
-
+app.use("/",userRoute);
 
 // NO ROUTE FIND ERROR HANDLING
 app.use((err,req, res, next) => {
