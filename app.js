@@ -6,7 +6,7 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const flash = require("connect-flash"); 
-const passport=require("passport");
+const passport = require("passport");
 const localStrategy=require("passport-local");
 const User=require("./models/user.js");
 // Routes
@@ -18,7 +18,7 @@ const { deserialize } = require("v8");
 const sessionOptions={
   secret:"mysupersecret",
   resave:false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie:{
     expires:Date.now()+7*24*60*60*1000,
     maxAge:7*24*60*60*1000,
@@ -61,6 +61,7 @@ passport.deserializeUser(User.deserializeUser());
  app.use((req,res,next)=>{
   res.locals.success=req.flash("success");
   res.locals.error=req.flash("error");
+  res.locals.currUser=req.user;
   next();
  });
 
