@@ -36,7 +36,7 @@ res.render("listings/new.ejs");
 // Show route
 router.get("/:id", wrapAsync(async (req, res) => {
   let { id } = req.params;
-  const listing = await Listing.findById(id).populate("reviews");
+  const listing = await Listing.findById(id).populate("reviews").populate("owner");
   if(!listing){
     req.flash("error","Listing you requested does not exist!");
     res.redirect("/listings");
@@ -46,15 +46,14 @@ router.get("/:id", wrapAsync(async (req, res) => {
   }
  
 }));
-
 // CREATE ROUTE
 router.post("/",isLoggedIn,validateListing, wrapAsync(async (req, res) => {
   // 🔥 convert price to number
   req.body.listing.price = Number(req.body.listing.price);
   const newListing = new Listing(req.body.listing);
+  console.log(req.user._id);
+  newListing.owner=req.user._id;
   const saved = await newListing.save();
-  console.log("SAVED:", saved);
-  req.flash("success","New listing created!");
   res.redirect("/listings");
 }));
 
