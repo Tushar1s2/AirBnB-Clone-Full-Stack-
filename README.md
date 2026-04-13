@@ -1,7 +1,7 @@
 # 🏡 Airbnb Clone — Full Stack Web Application
 
 > A production-grade Airbnb clone built with the **MERN-adjacent stack** (Node.js, Express, MongoDB, EJS).  
-> Demonstrates end-to-end full-stack development: RESTful architecture, authentication, session management, relational data modeling, and dynamic server-side rendering.
+> Demonstrates end-to-end full-stack development: RESTful architecture, authentication, authorization, session management, relational data modeling, and dynamic server-side rendering.
 
 ---
 
@@ -19,11 +19,13 @@ Built as part of the **Apna College Full Stack Development Course**.
 - View all listings and individual listing detail pages
 - Create, edit, and delete listings
 - Listings are ownership-linked — each listing is tied to the user who created it (`User ↔ Listing` relationship)
+- **Authorization enforced** — only the owner of a listing can edit or delete it
 
 ### ⭐ Reviews System
 - Authenticated users can add reviews (rating + comment) to listings
 - Reviews are stored with a `Listing ↔ Review` relationship via MongoDB references
 - Reviews are populated and rendered on the listing detail page
+- **Authorization enforced** — only the author of a review can delete it
 
 ### 🔐 Authentication & Authorization
 - User Signup and Login using **Passport.js** (Local Strategy)
@@ -31,6 +33,8 @@ Built as part of the **Apna College Full Stack Development Course**.
 - Redirect-after-login flow — users return to their intended page post-login
 - Protected routes using custom `isLoggedIn` middleware
 - `saveRedirectUrl` middleware for session-based redirect handling
+- **`isOwner` middleware** — verifies the logged-in user is the owner of a listing before allowing edit/delete
+- **`isReviewAuthor` middleware** — verifies the logged-in user is the author of a review before allowing delete
 
 ### ✅ Validation & Error Handling
 - Server-side validation using **Joi** schema validation
@@ -41,6 +45,7 @@ Built as part of the **Apna College Full Stack Development Course**.
 - Responsive UI built with **Bootstrap 5**
 - Server-side rendering using **EJS** templating engine with **ejs-mate** layouts
 - Reusable components: Navbar, Footer, Layout wrappers
+- Edit/Delete buttons conditionally rendered — visible only to the owner/author
 
 ---
 
@@ -160,6 +165,15 @@ App runs at: `http://localhost:8080`
 - Displayed owner info in EJS templates
 - **Key Insight:** `populate()` works like a SQL JOIN — it replaces an ObjectId with the full referenced document at query time
 
+### 📆 April 13, 2026 — Authorization for Listings & Reviews
+- Implemented `isOwner` middleware — checks if `req.user._id` matches `listing.owner` before allowing edit/delete
+- Implemented `isReviewAuthor` middleware — checks if `req.user._id` matches `review.author` before allowing delete
+- Added `author` field (ObjectId ref to User) in Review schema
+- Auto-assigned `req.user._id` as author on review creation
+- Conditionally rendered Edit/Delete buttons in EJS — visible only to the respective owner/author
+- Used `.equals()` for safe ObjectId comparison between `req.user._id` and stored references
+- **Key Insight:** Authentication answers "who are you?" — Authorization answers "what are you allowed to do?"
+
 ---
 
 ## 🐛 Debugging Fixes
@@ -172,6 +186,7 @@ App runs at: `http://localhost:8080`
 | Null review crash | Accessing properties on null review objects | Added null-safety checks before DB operations |
 | Session not persisting | Middleware loaded in wrong order | Moved session config above passport and flash init |
 | ObjectId comparison failing | Comparing ObjectId to string directly | Used `.toString()` or `.equals()` for comparison |
+| Unauthorized edit/delete access | No ownership check on protected routes | Added `isOwner` and `isReviewAuthor` middleware |
 
 ---
 
@@ -188,15 +203,16 @@ App runs at: `http://localhost:8080`
 | Flash Messaging | ✅ Working |
 | Error Handling | ✅ Structured |
 | Owner ↔ Listing Relationship | ✅ Implemented |
+| Authorization (Listings) | ✅ Complete |
+| Authorization (Reviews) | ✅ Complete |
 
 ---
 
 ## 🎯 Next Goals
 
-- [ ] **Authorization** — restrict listing edit/delete to the owner only
 - [ ] **Image Upload** — integrate Cloudinary + Multer for listing photos
 - [ ] **Map Integration** — Mapbox for listing location display
-- [ ] **Review Authorization** — allow review authors to edit/delete their own reviews
+- [ ] **Review Authorization** — allow review authors to edit their own reviews
 - [ ] **Deployment** — deploy to Render or Railway with MongoDB Atlas
 
 ---
@@ -210,6 +226,8 @@ App runs at: `http://localhost:8080`
 - `mergeParams: true` is required on child routers for nested route param access
 - RESTful route design: nouns for resources, HTTP verbs for actions
 - Always `return` after `res.redirect()` or `res.render()` to prevent double-response errors
+- Authentication answers "who are you?" — Authorization answers "what are you allowed to do?"
+- Always enforce authorization on both the **backend (middleware)** and **frontend (conditional rendering)**
 
 ---
 
