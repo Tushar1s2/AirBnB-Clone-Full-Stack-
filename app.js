@@ -64,16 +64,6 @@ passport.deserializeUser(User.deserializeUser());
   res.locals.currUser=req.user;
   next();
  });
-
-app.get("/demouser",async(req,res) => {
-  let fakeUser=new User({
-    email:"abc@gmail.com",
-    username:"abc"
-  });
-
-  let registerUser=await User.register(fakeUser,"helloword");
-  res.send("registeredUser");
-})
 // Routes
 app.use("/listings",listingsRoute);
 app.use("/listings/:id/reviews",reviewRoute);

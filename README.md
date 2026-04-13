@@ -1,96 +1,59 @@
-# 🏡 Airbnb Clone (Full Stack Project)
+# 🏡 Airbnb Clone — Full Stack Web Application
 
-## 📌 Project Overview
-
-A full-stack Airbnb clone built using Node.js, Express, MongoDB, and EJS.  
-This project demonstrates strong backend fundamentals, RESTful architecture, authentication, session management, data relationships, and dynamic server-side rendering.
-
-The application includes CRUD functionality, review system integration, validation middleware, flash messaging, authentication with Passport.js, protected routing, and relational data handling between users and listings.
+> A production-grade Airbnb clone built with the **MERN-adjacent stack** (Node.js, Express, MongoDB, EJS).  
+> Demonstrates end-to-end full-stack development: RESTful architecture, authentication, session management, relational data modeling, and dynamic server-side rendering.
 
 ---
 
-## 🚀 Features
+## 📌 Overview
 
-### 🔹 Core Features
-
-- 🔍 View all listings and individual listing details  
-- ➕ Create new listings  
-- ✏️ Edit existing listings  
-- ❌ Delete listings  
-- 👤 Listings linked with owner (User ↔ Listing relationship)
+This project is a fully functional rental listing platform inspired by Airbnb.  
+Users can browse listings, create and manage their own properties, leave reviews, and authenticate securely.  
+Built as part of the **Apna College Full Stack Development Course**.
 
 ---
 
-### 🔹 Reviews System
+## ✨ Features
 
-- ⭐ Add reviews to listings  
-- 🧾 Store ratings & comments  
-- 🔗 MongoDB relationships (Listing ↔ Reviews)  
-- 📌 Populate reviews in listing detail page  
+### 🏠 Listings (Full CRUD)
+- View all listings and individual listing detail pages
+- Create, edit, and delete listings
+- Listings are ownership-linked — each listing is tied to the user who created it (`User ↔ Listing` relationship)
 
----
+### ⭐ Reviews System
+- Authenticated users can add reviews (rating + comment) to listings
+- Reviews are stored with a `Listing ↔ Review` relationship via MongoDB references
+- Reviews are populated and rendered on the listing detail page
 
-### 🔹 Authentication & Authorization
+### 🔐 Authentication & Authorization
+- User Signup and Login using **Passport.js** (Local Strategy)
+- Session-based login persistence with **Express-Session**
+- Redirect-after-login flow — users return to their intended page post-login
+- Protected routes using custom `isLoggedIn` middleware
+- `saveRedirectUrl` middleware for session-based redirect handling
 
-- 🔐 User Signup & Login system  
-- 🛡️ Secure authentication using Passport.js  
-- 🍪 Session-based login persistence  
-- 🔄 Redirect-to-original-page after login  
-- 🚫 Protected routes using custom middleware (`isLoggedIn`)  
+### ✅ Validation & Error Handling
+- Server-side validation using **Joi** schema validation
+- Flash messages for success and error feedback (via **Connect-Flash**)
+- Centralized error handling middleware for clean, consistent error responses
 
----
-
-### 🔹 Validation & UX
-
-- ✅ Server-side validation using Joi  
-- ⚠️ Flash messages for success & error handling  
-- 🛑 Centralized error handling middleware  
-
----
-
-### 🔹 UI & Rendering
-
-- 🎨 Responsive UI using Bootstrap 5  
-- 🧩 Reusable components (Navbar, Footer, Layouts)  
-- ⚡ Server-side rendering with EJS & ejs-mate  
+### 🎨 UI & Rendering
+- Responsive UI built with **Bootstrap 5**
+- Server-side rendering using **EJS** templating engine with **ejs-mate** layouts
+- Reusable components: Navbar, Footer, Layout wrappers
 
 ---
 
 ## 🛠️ Tech Stack
 
-### 🔹 Frontend
-
-- HTML5  
-- CSS3  
-- JavaScript  
-- EJS  
-- Bootstrap 5  
-
----
-
-### 🔹 Backend
-
-- Node.js  
-- Express.js  
-
----
-
-### 🔹 Database
-
-- MongoDB  
-- Mongoose  
-
----
-
-### 🔹 Tools & Libraries
-
-- Joi (Validation)  
-- Connect-Flash (Flash Messaging)  
-- Method-Override  
-- ejs-mate (Layouts)  
-- Passport.js (Authentication)  
-- Passport-Local  
-- Express-Session  
+| Layer | Technology |
+|---|---|
+| **Frontend** | HTML5, CSS3, JavaScript, EJS, Bootstrap 5 |
+| **Backend** | Node.js, Express.js |
+| **Database** | MongoDB, Mongoose |
+| **Auth** | Passport.js, Passport-Local, Express-Session |
+| **Validation** | Joi |
+| **Utilities** | Connect-Flash, Method-Override, ejs-mate |
 
 ---
 
@@ -98,17 +61,17 @@ The application includes CRUD functionality, review system integration, validati
 
 ```
 AIRBNBCLONE/
-├── init/
-├── models/
-├── routes/
+├── init/                  # Database seeding scripts
+├── models/                # Mongoose schemas (User, Listing, Review)
+├── routes/                # Express route handlers
 ├── views/
-│   ├── includes/
-│   ├── layout/
-│   └── listings/
-├── public/
-├── utils/
-├── schema.js
-├── app.js
+│   ├── includes/          # Reusable EJS partials (navbar, flash)
+│   ├── layout/            # ejs-mate boilerplate layout
+│   └── listings/          # Listing CRUD views
+├── public/                # Static assets (CSS, JS, images)
+├── utils/                 # ExpressError class, async wrapper
+├── schema.js              # Joi validation schemas
+├── app.js                 # App entry point, middleware config
 └── package.json
 ```
 
@@ -117,173 +80,141 @@ AIRBNBCLONE/
 ## ⚙️ Setup Instructions
 
 ```bash
+# 1. Install dependencies
 npm install
+
+# 2. Start MongoDB
 mongod
-node app.js
+
+# 3. Seed the database
 node init/index.js
+
+# 4. Start the server
+node app.js
 ```
+
+App runs at: `http://localhost:8080`
 
 ---
 
 ## 📅 Development Log
 
-### 📆 18 March 2026
+### 📆 March 18, 2026 — Project Initialization
+- Initial project setup with Express and MongoDB
+- Established database connection via Mongoose
+- Designed Listing schema and seeded initial data
 
-- Initial project setup  
-- MongoDB connection established  
-- Schema design & data seeding  
+### 📆 March 19, 2026 — CRUD & Routing
+- Implemented full CRUD operations for listings
+- Built all EJS views (index, show, new, edit)
+- Designed RESTful routes following REST conventions
 
----
+### 📆 March 20, 2026 — UI & Responsiveness
+- Integrated Bootstrap 5 for responsive layout
+- Created reusable navbar, footer, and layout components via ejs-mate
 
-### 📆 19 March 2026
+### 📆 March 22, 2026 — Validation & UX
+- Added server-side Joi validation middleware
+- Integrated flash messaging for success and error states
+- Centralized error handling with custom `ExpressError` class
 
-- Implemented full CRUD functionality  
-- Built EJS views  
-- Designed RESTful routes  
+### 📆 March 26, 2026 — Debugging Sprint
+- Fixed route priority conflicts (specific routes before dynamic `:id` routes)
+- Debugged Joi validation failures and data type mismatches
 
----
+### 📆 March 27, 2026 — Reviews Integration
+- Implemented nested routes for reviews (`/listings/:id/reviews`)
+- Used `mergeParams: true` on review router
+- Fixed undefined `req.params` issues in nested route context
 
-### 📆 20 March 2026 🚀
+### 📆 March 28, 2026 — Stability & Safety
+- Fixed crashes caused by null/undefined reviews
+- Added null-safe checks for DB operations
+- Debugged routing flow edge cases
 
-- Integrated Bootstrap UI  
-- Made layout responsive  
-- Created reusable components  
+### 📆 March 30, 2026 — Sessions & Flash
+- Implemented Express-Session for persistent login state
+- Integrated Connect-Flash for session-based messaging
+- Fixed middleware order issues (session must come before passport and flash)
 
----
+### 📆 April 3, 2026 — Authentication Setup
+- Implemented user Signup with hashed passwords via Passport-Local-Mongoose
+- Integrated Passport.js with Local Strategy
+- Configured session serialization/deserialization
 
-### 📆 22 March 2026 🚀 (Validation & UX)
+### 📆 April 4, 2026 — Login, Logout & Route Protection
+- Implemented login/logout functionality
+- Built `isLoggedIn` middleware for protected routes
+- Connected frontend auth UI with backend session system
 
-- Implemented Joi validation middleware  
-- Added flash messaging system  
-- Improved error handling  
+### 📆 April 7, 2026 — Auth Deep Dive & Debugging
+- Implemented redirect-after-login with `saveRedirectUrl` middleware
+- Fixed `ERR_HTTP_HEADERS_SENT` — caused by missing `return` before `res.redirect()`
+- Debugged Passport session flow and `req.user` lifecycle
+- **Key Insight:** `req.user` only exists after successful login + active session; auth ≠ registration
 
----
-
-### 📆 26 March 2026 🛠️ (Debugging)
-
-- Fixed route priority issues  
-- Debugged validation failures  
-- Corrected data type mismatches  
-
----
-
-### 📆 27 March 2026 🧩 (Reviews Integration)
-
-- Implemented nested routes  
-- Used `mergeParams`  
-- Fixed undefined params issues  
-
----
-
-### 📆 28 March 2026 🔥 (Stability)
-
-- Fixed null review crashes  
-- Improved DB safety checks  
-- Debugged routing flow  
-
----
-
-### 📆 30 March 2026 ⚙️ (Sessions & Flash)
-
-- Implemented session handling  
-- Integrated flash messages  
-- Fixed middleware order issues  
-
----
-
-### 📆 3 April 2026 🔐 (Authentication Setup)
-
-- Implemented user signup  
-- Integrated Passport.js  
-- Configured local strategy  
+### 📆 April 8, 2026 — Owner Integration & Relationships
+- Added `owner` field (ObjectId ref to User) in Listing schema
+- Auto-assigned `req.user._id` as owner on listing creation
+- Used `populate("owner")` to fetch user details in listing show page
+- Displayed owner info in EJS templates
+- **Key Insight:** `populate()` works like a SQL JOIN — it replaces an ObjectId with the full referenced document at query time
 
 ---
 
-### 📆 4 April 2026 🔐 (Login & Protection)
+## 🐛 Debugging Fixes
 
-- Implemented login/logout  
-- Protected routes using middleware  
-- Connected frontend with auth system  
-
----
-
-### 📆 7 April 2026 🔥 (Authentication Deep Dive & Debugging)
-
-#### 🚀 Improvements
-
-- Implemented redirect-after-login flow  
-- Created reusable middleware:
-  - `isLoggedIn` → route protection  
-  - `saveRedirectUrl` → session-based redirect handling  
-- Fixed `ERR_HTTP_HEADERS_SENT` issues  
-- Debugged Passport session & `req.user` flow  
-
-#### 🧠 Learnings
-
-- `req.user` exists only after login + session  
-- Authentication ≠ Registration  
-- Middleware flow control (`return` & `next`) is critical  
-- Sessions power authentication  
-
----
-
-### 📆 8 April 2026 🧠 (Owner Integration & Relationships)
-
-#### 🚀 Improvements
-
-- Added `owner` field in Listing schema  
-- Linked listings with logged-in users (`req.user._id`)  
-- Established User ↔ Listing relationship  
-- Used `populate("owner")` for fetching user data  
-- Displayed owner details in EJS  
-
-#### 🧠 Learnings
-
-- ObjectId vs String difference  
-- How `ref` works in Mongoose  
-- How `populate()` works like JOIN  
-- Backend → EJS data flow  
-- Proper schema type usage  
+| Issue | Root Cause | Fix Applied |
+|---|---|---|
+| `ERR_HTTP_HEADERS_SENT` | `res.redirect()` called multiple times — missing `return` | Added `return res.redirect(...)` in middleware |
+| Route not matching | Dynamic `:id` route shadowing specific routes | Reordered routes — specific before dynamic |
+| Reviews showing undefined | `mergeParams` not set on review router | Set `mergeParams: true` on `express.Router()` |
+| Null review crash | Accessing properties on null review objects | Added null-safety checks before DB operations |
+| Session not persisting | Middleware loaded in wrong order | Moved session config above passport and flash init |
+| ObjectId comparison failing | Comparing ObjectId to string directly | Used `.toString()` or `.equals()` for comparison |
 
 ---
 
 ## ✅ Current Status
 
-- ✔️ Full CRUD implemented  
-- ✔️ Review system integrated  
-- ✔️ Authentication system working  
-- ✔️ Protected routes implemented  
-- ✔️ Redirect-after-login working  
-- ✔️ Session handling stable  
-- ✔️ Flash messaging working  
-- ✔️ Error handling structured  
-- ✔️ Listings linked with users (owner relationship implemented)  
+| Feature | Status |
+|---|---|
+| Full CRUD (Listings) | ✅ Complete |
+| Reviews System | ✅ Complete |
+| Authentication (Signup/Login/Logout) | ✅ Complete |
+| Protected Routes | ✅ Complete |
+| Redirect-after-login | ✅ Complete |
+| Session Handling | ✅ Stable |
+| Flash Messaging | ✅ Working |
+| Error Handling | ✅ Structured |
+| Owner ↔ Listing Relationship | ✅ Implemented |
 
 ---
 
 ## 🎯 Next Goals
 
-- 🛡️ Authorization (only owner can edit/delete listings)  
-- ☁️ Image upload (Cloudinary / Multer)  
-- 🌍 Deployment (Render / Railway)  
-- ⭐ Review edit & delete feature  
+- [ ] **Authorization** — restrict listing edit/delete to the owner only
+- [ ] **Image Upload** — integrate Cloudinary + Multer for listing photos
+- [ ] **Map Integration** — Mapbox for listing location display
+- [ ] **Review Authorization** — allow review authors to edit/delete their own reviews
+- [ ] **Deployment** — deploy to Render or Railway with MongoDB Atlas
 
 ---
 
 ## 🧠 Key Learnings
 
-- Middleware chaining & execution flow  
-- RESTful API design  
-- Joi validation  
-- MongoDB relationships  
-- Session & authentication flow  
-- Passport.js internals  
-- Debugging backend issues  
-- Mongoose `populate()` and referencing  
-- ObjectId handling and comparison logic  
+- Middleware execution order is critical — session → passport → flash → routes
+- `req.user` lifecycle: only populated after login and an active session
+- `populate()` in Mongoose is equivalent to a SQL JOIN — replaces ObjectId with a full document
+- ObjectId is not a string — always use `.equals()` or `.toString()` for comparison
+- `mergeParams: true` is required on child routers for nested route param access
+- RESTful route design: nouns for resources, HTTP verbs for actions
+- Always `return` after `res.redirect()` or `res.render()` to prevent double-response errors
 
 ---
 
 ## 👨‍💻 Author
 
-**Tushar Panwar**
+**Tushar Panwar**  
+2nd Year ECE | Full Stack Developer in Progress  
+Apna College — Delta Batch
