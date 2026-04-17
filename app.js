@@ -5,24 +5,24 @@ const mongo_url = "mongodb://127.0.0.1:27017/wanderlust";
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const flash = require("connect-flash"); 
+const flash = require("connect-flash");
 const passport = require("passport");
-const localStrategy=require("passport-local");
-const User=require("./models/user.js");
+const localStrategy = require("passport-local");
+const User = require("./models/user.js");
 // Routes
-const listingsRoute=require("./routes/listing.js");
-const reviewRoute=require("./routes/review.js");
-const session=require("express-session");
-const userRoute=require("./routes/user.js");
+const listingsRoute = require("./routes/listing.js");
+const reviewRoute = require("./routes/review.js");
+const session = require("express-session");
+const userRoute = require("./routes/user.js");
 const { deserialize } = require("v8");
-const sessionOptions={
-  secret:"mysupersecret",
-  resave:false,
+const sessionOptions = {
+  secret: "mysupersecret",
+  resave: false,
   saveUninitialized: false,
-  cookie:{
-    expires:Date.now()+7*24*60*60*1000,
-    maxAge:7*24*60*60*1000,
-    httpOnly:true,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
   }
 };
 
@@ -58,25 +58,26 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // Middleware of flash
- app.use((req,res,next)=>{
-  res.locals.success=req.flash("success");
-  res.locals.error=req.flash("error");
-  res.locals.currUser=req.user;
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.currUser = req.user;
   next();
- });
+});
 // Routes
-app.use("/listings",listingsRoute);
-app.use("/listings/:id/reviews",reviewRoute);
-app.use("/",userRoute);
+app.use("/listings", listingsRoute);
+app.use("/listings/:id/reviews", reviewRoute);
+app.use("/", userRoute);
 
 // NO ROUTE FIND ERROR HANDLING
-app.use((err,req, res, next) => {
-  res.render("listings/error.ejs",{err});
+app.use((err, req, res, next) => {
+  let { status = 500, message = "Something went wrong" } = err;
+  res.status(status).render("listings/error.ejs", { message });
 });
 // ERROR HANDLING MIDDLEWARE FOR ALL ERROR
 app.use((err, req, res, next) => {
   let { status = 500, message = "Something went wrong" } = err;
-  res.render("listings/error.ejs", { message });
+  res.status(status).render("listings/error.ejs", { message });
 });
 
 app.listen(8080, () => {

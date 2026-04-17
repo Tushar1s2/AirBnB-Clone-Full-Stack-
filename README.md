@@ -1,7 +1,7 @@
 # 🏡 Airbnb Clone — Full Stack Web Application
 
 > A production-grade Airbnb clone built with the **MERN-adjacent stack** (Node.js, Express, MongoDB, EJS).  
-> Demonstrates end-to-end full-stack development: RESTful architecture, authentication, authorization, session management, relational data modeling, and dynamic server-side rendering.
+> Demonstrates end-to-end full-stack development: RESTful architecture, MVC pattern, authentication, authorization, session management, relational data modeling, and dynamic server-side rendering.
 
 ---
 
@@ -58,6 +58,7 @@ Built as part of the **Apna College Full Stack Development Course**.
 | **Database** | MongoDB, Mongoose |
 | **Auth** | Passport.js, Passport-Local, Express-Session |
 | **Validation** | Joi |
+| **Architecture** | MVC (Model-View-Controller) |
 | **Utilities** | Connect-Flash, Method-Override, ejs-mate |
 
 ---
@@ -66,13 +67,23 @@ Built as part of the **Apna College Full Stack Development Course**.
 
 ```
 AIRBNBCLONE/
-├── init/                  # Database seeding scripts
-├── models/                # Mongoose schemas (User, Listing, Review)
-├── routes/                # Express route handlers
-├── views/
+├── controllers/           # Route handler logic (MVC — Controller layer)
+│   ├── listing.js
+│   ├── review.js
+│   └── user.js
+├── models/                # Mongoose schemas (MVC — Model layer)
+│   ├── listing.js
+│   ├── review.js
+│   └── user.js
+├── routes/                # Express route definitions (thin connectors)
+│   ├── listing.js
+│   ├── review.js
+│   └── user.js
+├── views/                 # EJS templates (MVC — View layer)
 │   ├── includes/          # Reusable EJS partials (navbar, flash)
 │   ├── layout/            # ejs-mate boilerplate layout
 │   └── listings/          # Listing CRUD views
+├── init/                  # Database seeding scripts
 ├── public/                # Static assets (CSS, JS, images)
 ├── utils/                 # ExpressError class, async wrapper
 ├── schema.js              # Joi validation schemas
@@ -174,6 +185,14 @@ App runs at: `http://localhost:8080`
 - Used `.equals()` for safe ObjectId comparison between `req.user._id` and stored references
 - **Key Insight:** Authentication answers "who are you?" — Authorization answers "what are you allowed to do?"
 
+### 📆 April 17, 2026 — MVC Architecture Refactor
+- Refactored the entire codebase to follow the **MVC (Model-View-Controller)** design pattern
+- Extracted all route handler logic from route files into dedicated controller files (`listing.js`, `review.js`, `user.js`) inside a new `controllers/` directory
+- **Models layer** (Mongoose schemas) remains unchanged — already well-structured as the data layer
+- **Views layer** (EJS templates) remains unchanged — already serving as the presentation layer
+- **Routes** now act as thin connectors — they only map HTTP methods/paths to controller functions
+- **Key Insight:** MVC separates concerns — Model handles data, View handles display, Controller handles business logic. This makes the codebase easier to maintain, test, and scale
+
 ---
 
 ## 🐛 Debugging Fixes
@@ -205,6 +224,7 @@ App runs at: `http://localhost:8080`
 | Owner ↔ Listing Relationship | ✅ Implemented |
 | Authorization (Listings) | ✅ Complete |
 | Authorization (Reviews) | ✅ Complete |
+| MVC Architecture Refactor | ✅ Complete |
 
 ---
 
@@ -228,6 +248,7 @@ App runs at: `http://localhost:8080`
 - Always `return` after `res.redirect()` or `res.render()` to prevent double-response errors
 - Authentication answers "who are you?" — Authorization answers "what are you allowed to do?"
 - Always enforce authorization on both the **backend (middleware)** and **frontend (conditional rendering)**
+- **MVC pattern** separates concerns cleanly — Controllers hold logic, Models hold data, Views hold display — making the codebase scalable and maintainable
 
 ---
 
