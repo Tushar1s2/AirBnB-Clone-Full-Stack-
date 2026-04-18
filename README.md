@@ -185,13 +185,18 @@ App runs at: `http://localhost:8080`
 - Used `.equals()` for safe ObjectId comparison between `req.user._id` and stored references
 - **Key Insight:** Authentication answers "who are you?" — Authorization answers "what are you allowed to do?"
 
-### 📆 April 17, 2026 — MVC Architecture Refactor
+### 📆 April 17, 2026 — MVC Architecture Refactor & Star Rating
 - Refactored the entire codebase to follow the **MVC (Model-View-Controller)** design pattern
 - Extracted all route handler logic from route files into dedicated controller files (`listing.js`, `review.js`, `user.js`) inside a new `controllers/` directory
 - **Models layer** (Mongoose schemas) remains unchanged — already well-structured as the data layer
 - **Views layer** (EJS templates) remains unchanged — already serving as the presentation layer
 - **Routes** now act as thin connectors — they only map HTTP methods/paths to controller functions
 - **Key Insight:** MVC separates concerns — Model handles data, View handles display, Controller handles business logic. This makes the codebase easier to maintain, test, and scale
+- Implemented **interactive star rating** feature for the Reviews system
+- Integrated [Starability CSS library](https://github.com/LunarLogic/starability) for accessible, animated star rating UI
+- `rating` field (Number, 1–5) stored in Review schema and submitted via review form
+- Star ratings are displayed on the listing detail page alongside each review
+- **Key Insight:** UI-level interactivity (star selection) and data-level storage (rating field in DB) must be connected through the form `name` attribute — the value selected by the user is sent as part of the form body to the backend
 
 ---
 

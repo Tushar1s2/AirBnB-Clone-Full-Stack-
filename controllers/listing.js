@@ -5,9 +5,7 @@ module.exports.index = async (req, res) => {
     res.render("listings/index.ejs", { allListing });
 };
 
-module.exports.new = (req, res) => {
-    console.log("Auth:", req.isAuthenticated());
-    console.log("User:", req.user);
+module.exports.new=(req, res) => {
     res.render("listings/new.ejs");
 }
 
@@ -24,11 +22,12 @@ module.exports.show = async (req, res) => {
 }
 
 module.exports.create=async (req, res) => {
-  // 🔥 convert price to number
+  let url=req.file.path;
+  let filename=req.file.filename;
   req.body.listing.price = Number(req.body.listing.price);
   const newListing = new Listing(req.body.listing);
-  console.log(req.user._id);
   newListing.owner=req.user._id;
+  newListing.image={url,filename};
   const saved = await newListing.save();
   res.redirect("/listings");
 }
@@ -48,5 +47,5 @@ module.exports.delete=async (req, res) => {
   let { id } = req.params;
   await Listing.findByIdAndDelete(id);
   req.flash("success","Listing deleted!");
-  res.redirect("/listings");
+  res.redirect("/listings",);
 }
