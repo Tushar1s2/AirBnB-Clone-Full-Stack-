@@ -49,9 +49,7 @@ main()
 async function main() {
   await mongoose.connect(mongo_url);
 }
-app.get("/", (req, res) => {
-  res.send("I am root path");
-});
+
 app.use(flash());
 
 // Passport
