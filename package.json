@@ -1,4 +1,7 @@
 {
+  "engines":{
+    "node":"24.11.0"
+  },
   "name": "airbnbclone",
   "version": "1.0.0",
   "description": "Airbnb Clone ",
@@ -12,6 +15,7 @@
   "dependencies": {
     "cloudinary": "^2.9.0",
     "connect-flash": "^0.1.1",
+    "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.4.2",
     "ejs": "^5.0.1",
